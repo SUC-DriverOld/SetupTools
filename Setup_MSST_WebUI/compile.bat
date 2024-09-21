@@ -1,1 +1,0 @@
-g++ -std=c++11 -static .\webui.cpp .\icon.o -o webui.exe
