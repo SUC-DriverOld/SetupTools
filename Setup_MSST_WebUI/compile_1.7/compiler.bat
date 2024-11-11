@@ -1,0 +1,1 @@
+g++ -o webui.exe webui.cpp icon.o -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic

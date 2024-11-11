@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MSST WebUI"
-#define MyAppVersion "1.6.1"
+#define MyAppVersion "1.7 preview.2"
 #define MyAppExeName "webui.exe"
 #define MyAppAssocName MyAppName + " File"
 #define MyAppAssocExt ".myp"
@@ -30,6 +30,7 @@ ArchitecturesInstallIn64BitMode=x64 ia64
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
+Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
@@ -54,13 +55,17 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [Code]
-procedure MoveModels();
+procedure AferSetup();
 var
   ModelNames: array of string;
   ModelFolder: string;
   SourcePath, DestPath: string;
   I: Integer;
   VocalModelSource, VocalModelDest: string;
+  DeletePaths: array of string;
+  j: Integer;
+  FullPath: string;
+
 begin
   ModelFolder := ExpandConstant('{app}\pretrain\');
   ModelNames := [
@@ -94,12 +99,45 @@ begin
   begin
     RenameFile(VocalModelSource, VocalModelDest);
   end;
+
+  DeletePaths := [
+    'models',
+    'backup',
+    'cache',
+    'tmpdir', 
+    'tools\webUI_for_clouds',
+    'data_backup\preset_data.json', 
+    'data\preset_data.json',
+    'tools\themes\theme_schema@1.2.2.json',
+    'dataset.py',
+    'ensemble.py',
+    'msst_inference.py',
+    'uvr_inference.py',
+    'train.py',
+    'train_accelerate.py',
+    'utils.py',
+    'valid.py'
+  ];
+
+  for j := 0 to GetArrayLength(DeletePaths) - 1 do
+  begin
+    FullPath := ExpandConstant('{app}') + '\' + DeletePaths[j];
+    if DirExists(FullPath) then
+    begin
+      DelTree(FullPath, True, True, True);
+    end
+    else if FileExists(FullPath) then
+    begin
+      DeleteFile(FullPath);
+    end;
+  end;
+
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if CurStep = ssPostInstall then
   begin
-    MoveModels();
+    AferSetup();
   end;
 end;
