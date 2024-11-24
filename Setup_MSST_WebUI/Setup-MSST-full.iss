@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MSST WebUI"
-#define MyAppVersion "1.7 preview.2"
+#define MyAppVersion "1.7 preview.3"
 #define MyAppExeName "webui.exe"
 #define MyAppAssocName MyAppName + " File"
 #define MyAppAssocExt ".myp"
@@ -25,7 +25,7 @@ OutputBaseFilename=Setup_MSST_WebUI_{#MyAppVersion}_Full
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern                         
-ArchitecturesInstallIn64BitMode=x64 ia64
+ArchitecturesInstallIn64BitMode=x64
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
