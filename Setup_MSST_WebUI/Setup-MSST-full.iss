@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MSST WebUI"
-#define MyAppVersion "1.7 preview.3"
+#define MyAppVersion "1.7.0"
 #define MyAppExeName "webui.exe"
 #define MyAppAssocName MyAppName + " File"
 #define MyAppAssocExt ".myp"
@@ -105,7 +105,8 @@ begin
     'backup',
     'cache',
     'tmpdir', 
-    'tools\webUI_for_clouds',
+    'tools\webUI_for_clouds\README.md',
+    'tools\webUI_for_clouds\webUI_for_clouds.py',
     'data_backup\preset_data.json', 
     'data\preset_data.json',
     'tools\themes\theme_schema@1.2.2.json',
@@ -116,7 +117,18 @@ begin
     'train.py',
     'train_accelerate.py',
     'utils.py',
-    'valid.py'
+    'valid.py',
+    'docs\ensemble.md',
+    'inference\msst_cli.py',
+    'inference\vr_cli.py',
+    'webui\ui\ensemble.py',
+    'webui\ui\models.py',
+    'webui\ui\msst.py',
+    'webui\ui\preset.py',
+    'webui\ui\settings.py',
+    'webui\ui\tools.py',
+    'webui\ui\train.py',
+    'webui\ui\vr.py'
   ];
 
   for j := 0 to GetArrayLength(DeletePaths) - 1 do
